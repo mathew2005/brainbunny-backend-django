@@ -43,7 +43,7 @@
                     {% for explanation in question.explanation_set.all%}
                     <span>
 
-                <div style="color: red">{{explanation.text}}</div>
+                <div style="color: red" class="explanation hidden">{{explanation.text}}</div>
                     {% endfor %}
                 </div>
             </div>
@@ -120,12 +120,22 @@
         userScoreInput.value = score;
     }
 
-    // highlight correct answer while showing result
+    function showExplanation(){
+        
+    }
+
     function highlightCorrectAnswers() {
         questions.forEach(question => {
+            
+            // highlight correct answer while showing result
             var correctAnswer = question.querySelector(".correct-answer");
             correctAnswer.previousElementSibling.querySelector("input").classList.add("bg-success");
             correctAnswer.previousElementSibling.classList.add("fw-bold");
+        
+            //show explanation to each question while showing result
+            var explanation = question.querySelector(".explanation");
+            explanation.classList.remove('hidden');
+        
         });
 
         // disable submit button
