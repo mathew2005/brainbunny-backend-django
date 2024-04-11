@@ -10,7 +10,7 @@
     <div class="container">
         <div class="d-flex justify-content-between">
             <span class="fs-5">{{quiz.created_at}}</span>
-            <span class="fs-5" id="timer">10:00</span>
+            <span class="fs-5" id="timer"></span>
         </div>
 
         {% for message in messages %}
@@ -29,6 +29,7 @@
                 <div class="card-body">
                     <p class="card-text">{{question.text}}</p>
                     {% for option in question.choice_set.all %}
+                    
                     <div class="form-check">
                         <label class="form-check-label" for="{{option.id}}">
                             <input class="form-check-input" value="{{option.text}}" type="radio" name="{{option.question.id}}" id="{{option.id}}">
@@ -38,6 +39,11 @@
                         <span class="visually-hidden correct-answer">{{option.text}}</span>
                         {% endif %}
                     </div>
+                    {% endfor %}
+                    {% for explanation in question.explanation_set.all%}
+                    <span>
+
+                <div style="color: red">{{explanation.text}}</div>
                     {% endfor %}
                 </div>
             </div>

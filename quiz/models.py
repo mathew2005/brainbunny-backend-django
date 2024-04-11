@@ -50,6 +50,7 @@ class Quiz(models.Model):
             choice3 = row['C']
             choice4 = row['D']
             correct_answer = row['Answer']
+            explanation_text = row['Explanation']
 
             # create the question object
             question = Question.objects.get_or_create(quiz=self, text=question_text)
@@ -59,6 +60,9 @@ class Quiz(models.Model):
             choice_2 = Choice.objects.get_or_create(question=question[0], text=choice2, is_correct=correct_answer == 'B')
             choice_3 = Choice.objects.get_or_create(question=question[0], text=choice3, is_correct=correct_answer == 'C')
             choice_4 = Choice.objects.get_or_create(question=question[0], text=choice4, is_correct=correct_answer == 'D')
+            
+            #create explanation objects
+            explanation = Explanation.objects.get_or_create(question=self, text=explanation_text)
 
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
@@ -67,7 +71,14 @@ class Question(models.Model):
     def __str__(self):
         return self.text[:50]
     
-
+class Explanation(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    text = models.TextField()
+    
+    def __str__(self):
+        return f"{self.question.text[:50]}, {self.text[:20]}"
+    
+ 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     text = models.CharField(max_length=255)
