@@ -62,7 +62,8 @@ class Quiz(models.Model):
             choice_4 = Choice.objects.get_or_create(question=question[0], text=choice4, is_correct=correct_answer == 'D')
             
             #create explanation objects
-            explanation = Explanation.objects.get_or_create(question=self, text=explanation_text)
+            explanation = Explanation.objects.get_or_create(question=question[0], text=explanation_text)
+
 
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
